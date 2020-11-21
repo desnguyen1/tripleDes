@@ -117,6 +117,9 @@ int main() {
     key=binaryConversion(key);
     cout<<"\n"<<key;
     for(int i = 0; i<3; i++) {
+        //avoids duplication
+        ciphertext = "";
+
         keyPart[i] = key.substr(0, 64);
         key = key.erase(0, 64);
         //cout << "\nkeyPart[" << i << "]: " << keyPart[i];
@@ -126,10 +129,56 @@ int main() {
         len = plaintextCopy.length();
 
         //encryption
+        cout << "\nBeginning encryption.....";
+        while(len > 0) {
+            //cout<<"\nplain copy len: "<<len;
+            //get 64 bit blocks of plaintext
+            get64BitBlock(plaintextCopy, bitBlock, len);
+            //cout<<"\nplain copy len: "<<len;
 
+            ciphertext += des(bitBlock, subKeys);
+            //cout<<"\ncipher: "<<ciphertext;
+        }
+        cout<<"\nCiphertext: "<<ciphertext;
+        cout<<"\nlength of ciphertext:"<<ciphertext.length()<<endl;
+
+        //testing
+        plaintextCopy = ciphertext;
     }
+
+    //decryption
+    for(int i = 2; i>=0; i--){
+        bitBlock = "";
+
+        //avoids duplication
+        plainFromCiph = "";
+
+        cout<<"\nStarting decryption of ciphertext......";
+
+        //generate subkeys in reverse order
+        generateSubKeysDecryption(key, subKeys);
+        len = ciphertext.length();
+        while(len>0){
+            //cout<<"\ncipher length: "<<len;
+
+            //get 64bit blocks
+            get64BitBlock(ciphertext,bitBlock, len);
+
+            plainFromCiph += des(bitBlock, subKeys);
+        }
+        cout<<"\nPlaintext: "<<plainFromCiph;
+        cout<<"\nlength of binary plaintext:"<<plainFromCiph.length();
+
+        ciphertext = plainFromCiph;
+    }
+
+    //convert to ascii
+    to_ascii(plainFromCiph, asciiPlain);
+    cout<<"\nplaintext ASCII: "<<asciiPlain<<endl;
 
     return 0;
 }
 
 //TODO: get 24 character key and split into 3 key parts
+
+//secretkejkdseridncdskekf
