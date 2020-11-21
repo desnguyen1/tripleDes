@@ -96,7 +96,7 @@ string getPlaintext(){
 }
 
 int main() {
-    string key, keyParts[3]; //keyParts is the 192-bit key split into 3 64-bit keys
+    string key, keyPart[3]; //keyParts is the 192-bit key split into 3 64-bit keys
     string plaintext="",ciphertext="", plaintextCopy="";
     string plainFromCiph = ""; //gets plaintext from decryption
     string asciiPlain="", asciiCiph=""; //plaintext/ciphertext in ASCII
@@ -115,8 +115,21 @@ int main() {
         key = getKey();
     }
     key=binaryConversion(key);
+    cout<<"\n"<<key;
+    for(int i = 0; i<3; i++) {
+        keyPart[i] = key.substr(0, 64);
+        key = key.erase(0, 64);
+        //cout << "\nkeyPart[" << i << "]: " << keyPart[i];
 
-    //key scheduling
+        //key scheduling
+        generateSubKeys(keyPart[i],subKeys);
+        len = plaintextCopy.length();
+
+        //encryption
+
+    }
 
     return 0;
 }
+
+//TODO: get 24 character key and split into 3 key parts

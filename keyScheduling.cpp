@@ -30,7 +30,7 @@ int pc_two[48] = {13, 16, 10, 23, 0, 4,
 //get key
 string getKey(){
     string key;
-    cout<<"\nSecret Key must be 8 characters with no spaces (ASCII)";
+    cout<<"\nSecret Key must be 24 characters with no spaces (ASCII)";
     cout<<"\nEnter a Secret key: ";
     cin>>key;
     return key;
@@ -148,5 +148,3 @@ void generateSubKeysDecryption(string key, string subKey[]){
         //cout<<"\ntest subkey: "<<subKey[roundNum-1];
     }
 }
-
-//TODO: get 24 character key and split into 3 key parts
