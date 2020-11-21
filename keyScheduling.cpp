@@ -149,3 +149,4 @@ void generateSubKeysDecryption(string key, string subKey[]){
     }
 }
 
+//TODO: get 24 character key and split into 3 key parts
